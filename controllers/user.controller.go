@@ -39,6 +39,6 @@ func (u * UserController) RegisterUserRoutes(rg *gin.RouterGroup){
   userRoute.POST("/create", u.CreateUser);
   userRoute.GET("/get/:name", u.GetUser);
   userRoute.GET("/getAll", u.GetAll);
-  userRoute.PUT("/update/:name", u.UpdateUser);
+  userRoute.PATCH("/update/:name", u.UpdateUser);
   userRoute.DELETE("/delete/:name", u.DeleteUser);
 }
