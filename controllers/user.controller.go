@@ -22,7 +22,13 @@ func (u *UserController) CreateUser(ctx *gin.Context){
     ctx.JSON(400, gin.H{"error": err.Error()});
     return;
   }
-  ctx.JSON(200, u.UserService.CreateUser(&user));
+
+  e := u.UserService.CreateUser(&user);
+  if e != nil {
+    ctx.JSON(400, gin.H{"error": e.Error()});
+    return;
+  }
+  ctx.JSON(200, gin.H{"message": "User created successfully"});
 }
 
 func (u *UserController) GetUser(ctx *gin.Context){
