@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/Sam44323/gin-POC/models"
 	"github.com/Sam44323/gin-POC/services"
 	"github.com/gin-gonic/gin"
 );
@@ -15,7 +16,13 @@ func New(userserive services.UserService) UserController {
 
 
 func (u *UserController) CreateUser(ctx *gin.Context){
-  ctx.JSON(200, nil);
+  var user models.User;
+  err := ctx.ShouldBindJSON(&user); // binding the user object to the data from the model
+  if err != nil {
+    ctx.JSON(400, gin.H{"error": err.Error()});
+    return;
+  }
+  ctx.JSON(200, u.UserService.CreateUser(&user));
 }
 
 func (u *UserController) GetUser(ctx *gin.Context){
