@@ -15,16 +15,21 @@ func New(userserive services.UserService) UserController {
 
 
 func (u *UserController) CreateUser(ctx *gin.Context){
+  ctx.JSON(200, nil);
 }
 
-func (u *UserController) GetUser(*gin.Context){
+func (u *UserController) GetUser(ctx *gin.Context){
+  ctx.JSON(200, nil);
 }
 
-func (u *UserController) GetAll(*gin.Context) {
+func (u *UserController) GetAll(ctx *gin.Context) {
+  ctx.JSON(200, nil);
 }
 
-func (u *UserController) UpdateUser(*gin.Context) {
+func (u *UserController) UpdateUser(ctx *gin.Context) {
+  ctx.JSON(200, nil);
 }
 
-func (u *UserController) DeleteUser(*gin.Context) {
+func (u *UserController) DeleteUser(ctx *gin.Context) {
+  ctx.JSON(200, nil);
 }
