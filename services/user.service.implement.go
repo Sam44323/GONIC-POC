@@ -19,10 +19,7 @@ func NewUserServiceImpl(usercollection *mongo.Collection, ctx context.Context) *
 
 func (u *UserServiceImpl) CreateUser(user *models.User) error{
   _, err := u.usercollection.InsertOne(u.ctx, user);
-  if err != nil {
   return err;
-  };
-  return nil;
 };
 
 func (u *UserServiceImpl) GetUser(id *string) (*models.User, error){
