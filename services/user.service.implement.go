@@ -12,8 +12,10 @@ type UserServiceImpl struct{
 }
 
 func NewUserServiceImpl(usercollection *mongo.Collection, ctx context.Context) *UserServiceImpl {
-  return &UserServiceImpl{usercollection, ctx}
+  return &UserServiceImpl{usercollection, ctx}  // creating a new struct
 }
+
+// implementation methods for the interface (automatically inferred)
 
 func (u *UserServiceImpl) CreateUser(user *models.User) error{
   return nil
