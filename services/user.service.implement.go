@@ -18,8 +18,12 @@ func NewUserServiceImpl(usercollection *mongo.Collection, ctx context.Context) *
 // implementation methods for the interface (automatically inferred)
 
 func (u *UserServiceImpl) CreateUser(user *models.User) error{
-  return nil
-}
+  _, err := u.usercollection.InsertOne(u.ctx, user);
+  if err != nil {
+  return err;
+  };
+  return nil;
+};
 
 func (u *UserServiceImpl) GetUser(id *string) (*models.User, error){
   return nil, nil
