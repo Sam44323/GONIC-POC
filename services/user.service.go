@@ -4,6 +4,8 @@ import (
   "github.com/Sam44323/gin-POC/models"
   );
 
+// struct declaration for user-service methods
+
 type UserService interface{
   CreateUser(*models.User) error
   GetUser(*string) (*models.User, error) // either the user or any error will be returned
