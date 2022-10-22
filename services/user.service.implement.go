@@ -22,8 +22,8 @@ func (u *UserServiceImpl) CreateUser(user *models.User) error{
   return err;
 };
 
-func (u *UserServiceImpl) GetUser(id *string) (*models.User, error){
-  return nil, nil
+func (u *UserServiceImpl) GetUser(name *string) (*models.User, error){
+  return nil, nil; 
 }
 
 func (u *UserServiceImpl) GetAll() ([]*models.User, error){
