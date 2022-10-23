@@ -44,7 +44,7 @@ func (u *UserServiceImpl) UpdateUser(user *models.User) error {
 	update := bson.D{bson.E{Key: "$set", Value: bson.D{bson.E{Key: "user_name", Value: user.Name}, bson.E{Key: "user_age", Value: user.Age}, bson.E{Key: "user_address", Value: user.Address}}}}
 	result, _ := u.usercollection.UpdateOne(u.ctx, filter, update)
 	if result.MatchedCount == 0 {
-		return errors.New("no user found")
+		return errors.New("no user found for update")
 	}
 	return nil
 }
@@ -53,7 +53,7 @@ func (u *UserServiceImpl) DeleteUser(name *string) error {
 	filter := bson.D{bson.E{Key: "user_name", Value: name}}
 	result, _ := u.usercollection.DeleteOne(u.ctx, filter)
 	if result.DeletedCount == 0 {
-		return errors.New("no user found")
+		return errors.New("no user found for delete")
 	}
 	return nil
 }
