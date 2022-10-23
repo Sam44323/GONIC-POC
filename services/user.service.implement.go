@@ -47,7 +47,7 @@ func (u *UserServiceImpl) GetAll() ([]*models.User, error) {
 		if err != nil {
 			return nil, err
 		}
-		_ = append(users, &user)
+		users = append(users, &user)
 	}
 	if err := cursor.Err(); err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ func (u *UserServiceImpl) GetAll() ([]*models.User, error) {
 	if len(users) == 0 {
 		return nil, errors.New("documents not found")
 	}
-	return nil, nil
+	return users, nil
 }
 
 func (u *UserServiceImpl) UpdateUser(user *models.User) error {
