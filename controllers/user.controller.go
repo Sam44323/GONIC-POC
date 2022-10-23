@@ -14,6 +14,10 @@ func New(userserive services.UserService) UserController {
 	return UserController{UserService: userserive}
 }
 
+func (u *UserController) Test(ctx *gin.Context) {
+	ctx.JSON(200, gin.H{"message": "Test"})
+}
+
 func (u *UserController) CreateUser(ctx *gin.Context) {
 	var user models.User
 	err := ctx.ShouldBindJSON(&user) // binding the user object to the data from the model
@@ -82,6 +86,7 @@ func (u *UserController) DeleteUser(ctx *gin.Context) {
 
 func (u *UserController) RegisterUserRoutes(rg *gin.RouterGroup) {
 	userRoute := rg.Group("/user") // creating a base-path for the user-route
+	userRoute.GET("/get/test", u.Test)
 	userRoute.POST("/create", u.CreateUser)
 	userRoute.GET("/get/:name", u.GetUser)
 	userRoute.GET("/getAll", u.GetAll)

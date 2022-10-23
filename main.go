@@ -44,7 +44,8 @@ func init() {
 	usercollection := mongoclient.Database("userdb").Collection("users")
 	userservice := services.NewUserServiceImpl(usercollection, ctx)
 	controllers.New(userservice)
-	gin.Default()
+	server := gin.Default()
+	log.Fatal(server.Run(":8080"))
 }
 
 func main() {
@@ -52,6 +53,4 @@ func main() {
 
 	basepath := server.Group("/v1")
 	usercontroller.RegisterUserRoutes(basepath)
-
-	log.Fatal(server.Run(":8080"))
 }
