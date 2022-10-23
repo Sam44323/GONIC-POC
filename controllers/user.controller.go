@@ -38,7 +38,7 @@ func (u *UserController) GetUser(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(200, gin.H{
-		"message": "User found",
+		"message": "User found!",
 		"user":    user,
 	})
 }
