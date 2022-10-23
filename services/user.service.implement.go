@@ -33,9 +33,29 @@ func (u *UserServiceImpl) GetUser(name *string) (*models.User, error) {
 }
 
 func (u *UserServiceImpl) GetAll() ([]*models.User, error) {
-	// var users []*models.User
-	// cursor, err := u.usercollection.Find(u.ctx, bson.D{})
+	var users []*models.User
+	cursor, err := u.usercollection.Find(u.ctx, bson.D{})
 
+	if err != nil {
+		return nil, err
+	}
+
+	for cursor.Next(u.ctx) {
+		// iterating over the cursor and appending to the user's array
+		var user models.User
+		err := cursor.Decode(&user)
+		if err != nil {
+			return nil, err
+		}
+		_ = append(users, &user)
+	}
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
+	cursor.Close(u.ctx)
+	if len(users) == 0 {
+		return nil, errors.New("documents not found")
+	}
 	return nil, nil
 }
 
