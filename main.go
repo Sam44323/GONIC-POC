@@ -40,9 +40,18 @@ func init() {
 	}
 
 	fmt.Println("Connected to MongoDB!")
+
+	usercollection := mongoclient.Database("userdb").Collection("users")
+	userservice := services.NewUserServiceImpl(usercollection, ctx)
+	controllers.New(userservice)
+	gin.Default()
 }
 
 func main() {
-	server := gin.Default()
-	server.Run(":8080")
+	defer mongoclient.Disconnect(ctx) // disconnect if the mongo shut-downs
+
+	basepath := server.Group("/v1")
+	usercontroller.RegisterUserRoutes(basepath)
+
+	log.Fatal(server.Run(":8080"))
 }
