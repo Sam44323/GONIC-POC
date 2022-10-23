@@ -31,10 +31,14 @@ func (u *UserServiceImpl) GetUser(name *string) (*models.User, error) {
 }
 
 func (u *UserServiceImpl) GetAll() ([]*models.User, error) {
+	// var users []*models.User
+	// cursor, err := u.usercollection.Find(u.ctx, bson.D{})
+
 	return nil, nil
 }
 
 func (u *UserServiceImpl) UpdateUser(user *models.User) error {
+
 	return nil
 }
 

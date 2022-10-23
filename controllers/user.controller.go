@@ -44,11 +44,31 @@ func (u *UserController) GetUser(ctx *gin.Context) {
 }
 
 func (u *UserController) GetAll(ctx *gin.Context) {
-	ctx.JSON(200, nil)
+	var users []*models.User
+	users, err := u.UserService.GetAll()
+	if err != nil {
+		ctx.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message": "Users found!",
+		"users":   users,
+	})
 }
 
 func (u *UserController) UpdateUser(ctx *gin.Context) {
-	ctx.JSON(200, nil)
+	var user models.User
+	err := ctx.ShouldBindJSON(&user) // binding the user object to the data from the model
+	if err != nil {
+		ctx.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	e := u.UserService.UpdateUser(&user)
+	if e != nil {
+		ctx.JSON(400, gin.H{"error": e.Error()})
+		return
+	}
+	ctx.JSON(200, gin.H{"message": "User updated successfully"})
 }
 
 func (u *UserController) DeleteUser(ctx *gin.Context) {
