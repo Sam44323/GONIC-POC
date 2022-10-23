@@ -52,6 +52,6 @@ func main() {
 	basepath := server.Group("/v1")
 	uc.RegisterUserRoutes(basepath)
 
-	log.Fatal(server.Run(":9090"))
+	log.Fatal(server.Run(":8080"))
 
 }
