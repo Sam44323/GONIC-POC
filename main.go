@@ -4,6 +4,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/Sam44323/gin-POC/controllers"
@@ -35,8 +36,10 @@ func init() {
 
 	err = mongoclient.Ping(ctx, readpref.Primary())
 	if err != nil {
-		log.Fatal(err) // ping the server to verify that the connection is established to the primary-database or not
+		log.Fatal(err) // ping the server to verify that the connection is established to the primary-database(not the read-replica) or not
 	}
+
+	fmt.Println("Connected to MongoDB!")
 }
 
 func main() {
