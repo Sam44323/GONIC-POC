@@ -16,41 +16,42 @@ import (
 )
 
 var (
-	server         *gin.Engine
-	userservice    services.UserService
-	usercontroller controllers.UserController
-	ctx            context.Context
-	usercollection *mongo.Collection
-	mongoclient    *mongo.Client
-	err            error
+	server      *gin.Engine
+	us          services.UserService
+	uc          controllers.UserController
+	ctx         context.Context
+	userc       *mongo.Collection
+	mongoclient *mongo.Client
+	err         error
 )
 
 func init() {
-	ctx = context.TODO() // a simple context creation with no cancellation or timeouts
-	mongoconnection := options.Client().ApplyURI("mongodb://localhost:27017")
-	mongoclient, err = mongo.Connect(ctx, mongoconnection)
+	ctx = context.TODO()
 
+	mongoconn := options.Client().ApplyURI("mongodb://localhost:27017")
+	mongoclient, err = mongo.Connect(ctx, mongoconn)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("error while connecting with mongo", err)
 	}
-
 	err = mongoclient.Ping(ctx, readpref.Primary())
 	if err != nil {
-		log.Fatal(err) // ping the server to verify that the connection is established to the primary-database(not the read-replica) or not
+		log.Fatal("error while trying to ping mongo", err)
 	}
 
-	fmt.Println("Connected to MongoDB!")
+	fmt.Println("mongo connection established")
 
-	usercollection := mongoclient.Database("userdb").Collection("users")
-	userservice := services.NewUserServiceImpl(usercollection, ctx)
-	controllers.New(userservice)
-	server := gin.Default()
-	log.Fatal(server.Run(":8080"))
+	userc = mongoclient.Database("userdb").Collection("users")
+	us = services.NewUserServiceImpl(userc, ctx)
+	uc = controllers.New(us)
+	server = gin.Default()
 }
 
 func main() {
-	defer mongoclient.Disconnect(ctx) // disconnect if the mongo shut-downs
+	defer mongoclient.Disconnect(ctx)
 
 	basepath := server.Group("/v1")
-	usercontroller.RegisterUserRoutes(basepath)
+	uc.RegisterUserRoutes(basepath)
+
+	log.Fatal(server.Run(":9090"))
+
 }

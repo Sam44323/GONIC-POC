@@ -86,7 +86,7 @@ func (u *UserController) DeleteUser(ctx *gin.Context) {
 
 func (u *UserController) RegisterUserRoutes(rg *gin.RouterGroup) {
 	userRoute := rg.Group("/user") // creating a base-path for the user-route
-	userRoute.GET("/get/test", u.Test)
+	userRoute.GET("/test", u.Test)
 	userRoute.POST("/create", u.CreateUser)
 	userRoute.GET("/get/:name", u.GetUser)
 	userRoute.GET("/getAll", u.GetAll)
