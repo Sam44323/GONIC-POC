@@ -24,10 +24,10 @@ func (u *UserServiceImpl) CreateUser(user *models.User) error {
 }
 
 func (u *UserServiceImpl) GetUser(name *string) (*models.User, error) {
-	var user *models.User
+	var user models.User
 	querym := bson.D{bson.E{Key: "name", Value: name}}
 	err := u.usercollection.FindOne(u.ctx, querym).Decode(&user)
-	return user, err
+	return &user, err
 }
 
 func (u *UserServiceImpl) GetAll() ([]*models.User, error) {
