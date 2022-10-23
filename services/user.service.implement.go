@@ -49,6 +49,11 @@ func (u *UserServiceImpl) UpdateUser(user *models.User) error {
 	return nil
 }
 
-func (u *UserServiceImpl) DeleteUser(id *string) error {
+func (u *UserServiceImpl) DeleteUser(name *string) error {
+	filter := bson.D{bson.E{Key: "user_name", Value: name}}
+	result, _ := u.usercollection.DeleteOne(u.ctx, filter)
+	if result.DeletedCount == 0 {
+		return errors.New("no user found")
+	}
 	return nil
 }
