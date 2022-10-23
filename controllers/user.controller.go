@@ -44,7 +44,6 @@ func (u *UserController) GetUser(ctx *gin.Context) {
 }
 
 func (u *UserController) GetAll(ctx *gin.Context) {
-	var users []*models.User
 	users, err := u.UserService.GetAll()
 	if err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
